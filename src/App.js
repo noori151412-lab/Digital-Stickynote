@@ -77,7 +77,7 @@ function setupAuthButtons() {
     loginBtn.onclick = async () => {
         const email = document.getElementById('login-email').value;
         const pass = document.getElementById('login-pass').value;
-        
+
         if (auth.currentUser) {
             document.getElementById('app-root').innerHTML = "";
             document.getElementById('notes-container').style.display = 'block';
@@ -126,8 +126,8 @@ export function initApp() {
     if (logoutBtn) {
         logoutBtn.onclick = () => {
             if (window.confirm("Are you sure you want to log out?")) {
-                signOut(auth).then(() => { 
-                    alert("Logged Out Successfully!"); 
+                signOut(auth).then(() => {
+                    alert("Logged Out Successfully!");
                 }).catch(err => alert("Error: " + err.message));
             }
         };
@@ -138,14 +138,14 @@ export function initApp() {
         const notesDiv = document.getElementById('notes-container');
 
         if (user) {
-            root.innerHTML = ""; 
+            root.innerHTML = "";
             notesDiv.style.display = 'block';
             if (mainHeading) mainHeading.style.display = 'none';
             loadUserNotes(user.uid);
         } else {
             notesDiv.style.display = 'none';
             if (mainHeading) mainHeading.style.display = 'block';
-            
+
             renderLandingPage(() => {
                 renderAuthForm();
             });
@@ -155,9 +155,9 @@ export function initApp() {
 
 async function loadUserNotes(userId) {
     const q = query(
-        collection(db, "notes"), 
-        where("uid", "==", userId), 
-        orderBy("createdAt", "desc") 
+        collection(db, "notes"),
+        where("uid", "==", userId),
+        orderBy("createdAt", "desc")
     );
 
     onSnapshot(q, (snapshot) => {
@@ -166,8 +166,8 @@ async function loadUserNotes(userId) {
             list.innerHTML = "";
             snapshot.forEach((docSnap) => {
                 const data = docSnap.data();
-                const displayTime = data.createdAt 
-                    ? data.createdAt.toDate().toLocaleString('en-PK', { hour12: true }) 
+                const displayTime = data.createdAt
+                    ? data.createdAt.toDate().toLocaleString('en-PK', { hour12: true })
                     : "Just now...";
 
                 list.innerHTML += `
